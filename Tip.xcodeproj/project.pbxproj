@@ -12,6 +12,7 @@
 		EDDE6226212D2D0B005BE6CF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EDDE6224212D2D0B005BE6CF /* Main.storyboard */; };
 		EDDE6228212D2D0C005BE6CF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EDDE6227212D2D0C005BE6CF /* Assets.xcassets */; };
 		EDDE622B212D2D0C005BE6CF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EDDE6229212D2D0C005BE6CF /* LaunchScreen.storyboard */; };
+		EDDE62372130AF1E005BE6CF /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDDE62362130AF1E005BE6CF /* AboutViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		EDDE6227212D2D0C005BE6CF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EDDE622A212D2D0C005BE6CF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EDDE622C212D2D0C005BE6CF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EDDE62362130AF1E005BE6CF /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +62,7 @@
 				EDDE6227212D2D0C005BE6CF /* Assets.xcassets */,
 				EDDE6229212D2D0C005BE6CF /* LaunchScreen.storyboard */,
 				EDDE622C212D2D0C005BE6CF /* Info.plist */,
+				EDDE62362130AF1E005BE6CF /* AboutViewController.swift */,
 			);
 			path = Tip;
 			sourceTree = "<group>";
@@ -135,6 +138,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EDDE62372130AF1E005BE6CF /* AboutViewController.swift in Sources */,
 				EDDE6223212D2D0B005BE6CF /* ViewController.swift in Sources */,
 				EDDE6221212D2D0B005BE6CF /* AppDelegate.swift in Sources */,
 			);
@@ -283,6 +287,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = WU56SWC6F6;
 				INFOPLIST_FILE = Tip/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -300,6 +305,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = WU56SWC6F6;
 				INFOPLIST_FILE = Tip/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
