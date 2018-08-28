@@ -11,9 +11,9 @@ import UIKit
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate{
     
     @IBOutlet weak var price: UITextField!
-    var percentage : Double = 15.0
+    var percentage : Double = 0
     @IBOutlet weak var tipRecomend: UILabel!
-    var tips: [String] = [ "15","18","20"]
+    var tips: [Tip] = []
     @IBOutlet weak var newTip: UITextField!
     @IBOutlet weak var table: UITableView!
     
@@ -40,16 +40,26 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         var ret = true
         let tipInput = newTip.text!
         for tip in tips {
-            if tip == tipInput {
+            if tip.percentage == tipInput {
                 ret = false
             }
         }
         return ret
     }
     
+    func updateTip(index: IndexPath){
+        var tip = self.tips[index.row]
+        tip.tipRecommend = calculateUpdateTable(input: tip)
+        tips[index.row].tipRecommend = tip.tipRecommend
+    }
+    
     func insertNewTip(){
         if validateNullValues(input: newTip ) == true {
-            tips.append(newTip.text!)
+            var newRow = Tip()
+            newRow.percentage = newTip.text!
+            newRow.tipRecommend = calculateUpdateTable(input: newRow)
+            tips.append(newRow)
+            tips = tips.sorted(){ ($0.percentage as NSString).intValue < ($1.percentage as NSString).intValue}
             let index = IndexPath(row:tips.count - 1 ,section: 0 )
             table.beginUpdates()
             table.insertRows(at: [index] , with: .automatic)
@@ -59,6 +69,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         } else {
             showAlertMessage(title :"Attention!!", message: "Input the new tip, please")
         }
+        self.table.reloadData()
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -67,7 +78,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell = self.table.dequeueReusableCell(withIdentifier: "cell") as! UITableViewCell
-        cell.textLabel?.text = self.tips[indexPath.row]
+        updateTip(index: indexPath)
+        table.beginUpdates()
+        cell.textLabel?.text = "[" + self.tips[indexPath.row].percentage + "% ] : [" + self.tips[indexPath.row].tipRecommend + "] $"
+        cell.textLabel?.textAlignment = .center
+        table.endUpdates()
         return cell
     }
     
@@ -75,10 +90,16 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let cell = tableView.cellForRow(at: indexPath)
         let text = cell?.textLabel?.text
         percentage = (text! as NSString).doubleValue
-        tipRecomend.text = ""
         if price.text != nil && !(price.text == "") {
-            calculate()
+            let row = self.tips[indexPath.row]
+            updateTip(index:indexPath)
+            calculateUpdateTable(input: row)
         }
+    }
+    
+    func tableView(_ tableView: UITableView,
+                   didDeselectRowAt indexPath: IndexPath) {
+        self.table.reloadData()
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle , forRowAt indexPath: IndexPath){
@@ -106,13 +127,22 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     @IBAction func calculate(){
         if validateNullValues(input: price ) == true {
-            var result : Double
-            let value  = (price.text! as NSString).doubleValue
-            result =  round(value * percentage) / 100
-            tipRecomend.text = String(result)
+            self.table.reloadData()
         } else {
             showAlertMessage(title: "Attention!!", message: "Input the price, please")
         }
+        self.table.reloadData()
+    }
+    
+    
+    func calculateUpdateTable(input :Tip) -> String {
+        if validateNullValues(input: price) == true {
+            var result : Double
+            let value  = (price.text! as NSString).doubleValue
+            result =  round(value * (input.percentage as NSString).doubleValue) / 100
+            return String(result)
+        }
+        return ""
     }
     
     func textField( _ textFiel: UITextField , shouldChangeCharactersIn range: NSRange , replacementString string : String ) -> Bool{
@@ -120,6 +150,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let characterSet =  CharacterSet(charactersIn: string)
         return allowedCharacter.isSuperset(of: characterSet)
     }
+    
+    
 
 }
 
